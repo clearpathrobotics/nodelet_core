@@ -123,7 +123,8 @@ void CallbackQueueManager::removeQueue(const CallbackQueuePtr& queue)
   boost::mutex::scoped_lock lock(queues_mutex_);
   ROS_ASSERT(queues_.find(queue.get()) != queues_.end());
 
-  queues_.erase(queue.get());
+  if (queues_.find(queue.get()) != queues_.end())
+    queues_.erase(queue.get());
 }
 
 void CallbackQueueManager::callbackAdded(const CallbackQueuePtr& queue)
